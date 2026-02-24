@@ -78,31 +78,44 @@
      * - question, choices[{label, correct}] (pour quiz)
      */
     const PAGES = [
-      {
-        type: "text",
-        title: "Introduction – Pourquoi cette formation",
-        subtitle: "Lisez attentivement puis cliquez sur « Suite ».",
-        blocks: [
-          { p: "La sécurité n’est pas uniquement une question de procédure. Elle repose sur des comportements individuels cohérents et réactifs." },
-          { p: "L’objectif de cette formation est simple :" },
-          { ul: [
-              "rappeler les consignes essentielles",
-              "clarifier ce qui est attendu de chacun",
-              "garantir que chaque collaborateur sache comment réagir",
-              "renforcer la prévention au quotidien"
-            ]
-          },
-          { p: "Cette formation couvre :" },
-          { ol: [
-              "Les situations d’urgence majeures",
-              "Les ressources internes disponibles",
-              "Les comportements de prévention",
-              "La sécurité psychosociale"
-            ]
-          },
-          { p: "Important : chaque collaborateur est responsable de sa propre sécurité et contribue à celle des autres." }
-        ]
-      },
+{
+  type: "text",
+  title: "Introduction – Pourquoi cette formation",
+  subtitle: "Lisez attentivement puis cliquez sur « Suite ».",
+  blocks: [
+    { p: "La sécurité n’est pas uniquement une question de procédure. Elle repose sur des comportements individuels cohérents et réactifs." },
+    { p: "L’objectif de cette formation est simple :" },
+    { ul: [
+        "rappeler les consignes essentielles",
+        "clarifier ce qui est attendu de chacun",
+        "garantir que chaque collaborateur sache comment réagir",
+        "renforcer la prévention au quotidien"
+      ]
+    },
+    { p: "Cette formation couvre :" },
+    { ol: [
+        "Les situations d’urgence majeures",
+        "Les ressources internes disponibles",
+        "Les comportements de prévention",
+        "La sécurité psychosociale"
+      ]
+    },
+    { p: "Important : chaque collaborateur est responsable de sa propre sécurité et contribue à celle des autres." },
+
+    { html: '<div class="hr"></div>' },
+
+    { html: `
+      <div class="title" style="font-size:1.05rem;margin-top:6px;">
+        Plan interne d'urgence complet
+      </div>
+      <p style="margin-top:8px;">
+        <a href="piu.html">Découvrir notre Plan Interne d’Urgence (PIU)</a>
+      </p>
+    `}
+  ]
+},
+
+
       {
         type: "quiz",
         title: "Quiz 1",
@@ -712,7 +725,7 @@
             <div class="title" style="font-size:1.05rem;margin-top:6px;">Des questions ?</div>
             <p style="margin-top:8px;">
               Envoyez un mail à
-              <a href="mailto:christophe.vankerrebroeck@casinoresortnamur.be">christophe.vankerrebroeck@casinoresortnamur.be</a>
+              <a href="mailto:securite@circuscasinoresortnamur.be">securite@circuscasinoresortnamur.be</a>
             </p>
             <p class="hint">Remplacez l’adresse e-mail si nécessaire.</p>
           `},
@@ -721,7 +734,7 @@
             <p style="margin-top:8px;">
               <a href="piu.html">Ouvrir le Plan Interne d’Urgence (PIU)</a>
             </p>
-            <p class="hint">Le fichier <code>piu.html</code> doit être dans le même dossier que cette formation.</p>
+  
           `}
         ]
       }
