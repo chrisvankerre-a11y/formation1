@@ -72,6 +72,29 @@
     .feedback.ko { display:block; border-color: rgba(231,76,60,.65); background: rgba(231,76,60,.10); }
 
     .hint { margin-top: 10px; opacity: .8; font-size: .95rem; }
+  
+/* Admin (discret mais visible) */
+.admin-link{
+  position:fixed;
+  bottom:14px;
+  right:18px;
+  font-size:.85rem;
+  opacity:.65;
+  cursor:pointer;
+  user-select:none;
+  z-index:9999;
+}
+.admin-link:hover{ opacity:.95; }
+.toc-list{ list-style:none; padding:0; margin:10px 0 0; display:grid; gap:8px; }
+.toc-item{
+  border: 1px solid rgba(127,127,127,.30);
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor:pointer;
+}
+.toc-item:hover{ border-color: rgba(127,127,127,.55); }
+.toc-meta{ font-size:.85rem; opacity:.75; margin-top:4px; }
+
   </style>
 </head>
 <body>
@@ -754,6 +777,8 @@
     let allowNext = true; // bloqué sur page quiz tant que pas bonne réponse
     let quizAnswered = false;
     let finalMailSent = false; // déverrouille la page finale après clic sur mailto
+    let adminMode = false; // accès direct via sommaire après code
+
 
 
     const stage = document.getElementById("stage");
@@ -777,7 +802,7 @@
 
     function setButtons() {
       prevBtn.disabled = idx === 0;
-      nextBtn.disabled = !allowNext || idx === PAGES.length - 1;
+      nextBtn.disabled = ((idx === PAGES.length - 1) ? true : (!allowNext && !adminMode));
       nextBtn.textContent = (idx === PAGES.length - 1) ? "Terminé" : "Suite";
     }
 
@@ -852,7 +877,7 @@ if (idx === 0) {
 
       // reset state
       quizAnswered = false;
-      allowNext = false;
+      allowNext = adminMode ? true : false;
 
       page.choices.forEach((c) => {
         const li = document.createElement("li");
@@ -898,8 +923,109 @@ if (idx === 0) {
     }
 
 
+
+    function renderTOC() {
+      stage.innerHTML = "";
+      // bouton admin visible uniquement sur première page
+      const existingAdmin = document.getElementById("globalAdminLink");
+      if (existingAdmin) existingAdmin.remove();
+      if (idx === 0) {
+        const adminLink = document.createElement("div");
+        adminLink.id = "globalAdminLink";
+        adminLink.className = "admin-link";
+        adminLink.textContent = "admin";
+        adminLink.addEventListener("click", enterAdminMode);
+        document.body.appendChild(adminLink);
+      }
+
+
+      const root = document.createElement("div");
+      const title = document.createElement("div");
+      title.className = "title";
+      title.textContent = "Sommaire (mode admin)";
+      root.appendChild(title);
+
+      const sub = document.createElement("div");
+      sub.className = "subtitle";
+      sub.textContent = "Accès direct à toutes les pages.";
+      root.appendChild(sub);
+
+      const ul = document.createElement("ul");
+      ul.className = "toc-list";
+
+      // Accès direct page mailto en mode admin
+      const mailLi = document.createElement("li");
+      mailLi.className = "toc-item";
+      const mailTitle = document.createElement("div");
+      mailTitle.textContent = "Accès page attestation (mailto)";
+      mailLi.appendChild(mailTitle);
+      const mailMeta = document.createElement("div");
+      mailMeta.className = "toc-meta";
+      mailMeta.textContent = "Page technique";
+      mailLi.appendChild(mailMeta);
+      mailLi.addEventListener("click", () => renderMailGate());
+      ul.appendChild(mailLi);
+
+      PAGES.forEach((p, i) => {
+        const li = document.createElement("li");
+        li.className = "toc-item";
+
+        const t = document.createElement("div");
+        const label = (p && p.title) ? p.title : (p.type === "quiz" ? "Quiz" : "Page");
+        t.textContent = `${i + 1}. ${label}`;
+        li.appendChild(t);
+
+        const meta = document.createElement("div");
+        meta.className = "toc-meta";
+        meta.textContent = p.type === "quiz" ? "Quiz" : "Contenu";
+        li.appendChild(meta);
+
+        li.addEventListener("click", () => {
+          idx = i;
+          render();
+        });
+
+        ul.appendChild(li);
+      });
+
+      root.appendChild(ul);
+
+      stage.appendChild(root);
+
+      // navigation
+      allowNext = true;
+      prevBtn.disabled = false;
+      setButtons();
+      setProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function enterAdminMode() {
+      const code = window.prompt("Code admin :");
+      if (code === null) return;
+      if (String(code).trim() === "d") {
+        adminMode = true;
+        finalMailSent = true; // admin bypass mail gate
+        renderTOC();
+      } else {
+        window.alert("Code incorrect.");
+      }
+    }
+
     function renderMailGate() {
       stage.innerHTML = "";
+      // bouton admin visible uniquement sur première page
+      const existingAdmin = document.getElementById("globalAdminLink");
+      if (existingAdmin) existingAdmin.remove();
+      if (idx === 0) {
+        const adminLink = document.createElement("div");
+        adminLink.id = "globalAdminLink";
+        adminLink.className = "admin-link";
+        adminLink.textContent = "admin";
+        adminLink.addEventListener("click", enterAdminMode);
+        document.body.appendChild(adminLink);
+      }
+
 
       const root = document.createElement("div");
       const title = document.createElement("div");
@@ -943,6 +1069,18 @@ if (idx === 0) {
     function render() {
       const page = PAGES[idx];
       stage.innerHTML = "";
+      // bouton admin visible uniquement sur première page
+      const existingAdmin = document.getElementById("globalAdminLink");
+      if (existingAdmin) existingAdmin.remove();
+      if (idx === 0) {
+        const adminLink = document.createElement("div");
+        adminLink.id = "globalAdminLink";
+        adminLink.className = "admin-link";
+        adminLink.textContent = "admin";
+        adminLink.addEventListener("click", enterAdminMode);
+        document.body.appendChild(adminLink);
+      }
+
 
       if (page.type === "text") {
         allowNext = true;
@@ -956,6 +1094,25 @@ if (idx === 0) {
 
       setProgress();
       setButtons();
+
+      // bouton "Sommaire" en mode admin
+      let adminTocBtn = document.getElementById("adminTocBtn");
+      if (adminMode) {
+        if (!adminTocBtn) {
+          adminTocBtn = document.createElement("button");
+          adminTocBtn.type = "button";
+          adminTocBtn.id = "adminTocBtn";
+          adminTocBtn.className = "secondary";
+          adminTocBtn.textContent = "Sommaire";
+          adminTocBtn.addEventListener("click", () => renderTOC());
+          // inséré au début des actions
+          const actions = document.querySelector(".actions");
+          actions.insertBefore(adminTocBtn, actions.firstChild);
+        }
+      } else if (adminTocBtn) {
+        adminTocBtn.remove();
+      }
+
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -972,7 +1129,7 @@ if (idx === 0) {
       const currentPage = PAGES[idx];
 
       // Juste après la dernière question (Quiz final), on impose le clic sur le bouton mailto
-      if (currentPage && currentPage.type === "quiz" && currentPage.title === "Quiz final" && !finalMailSent) {
+      if (!adminMode && currentPage && currentPage.type === "quiz" && currentPage.title === "Quiz final" && !finalMailSent) {
         renderMailGate();
         return;
       }
