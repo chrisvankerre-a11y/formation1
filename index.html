@@ -735,10 +735,8 @@
           { html: `
             <div class="title" style="font-size:1.05rem;margin-top:6px;">Des questions ?</div>
             <p style="margin-top:8px;">
-              Envoyez un mail à
               <a href="mailto:christophe.vankerrebroeck@casinoresortnamur.be">christophe.vankerrebroeck@casinoresortnamur.be</a>
             </p>
-            <p class="hint">Remplacez l’adresse e-mail si nécessaire.</p>
           `},
           { html: `
             <div class="title" style="font-size:1.05rem;margin-top:6px;">Découvrir le Plan Interne d’Urgence</div>
@@ -755,6 +753,8 @@
     let idx = 0;
     let allowNext = true; // bloqué sur page quiz tant que pas bonne réponse
     let quizAnswered = false;
+    let finalMailSent = false; // déverrouille la page finale après clic sur mailto
+
 
     const stage = document.getElementById("stage");
     const progress = document.getElementById("progress");
@@ -897,6 +897,49 @@ if (idx === 0) {
       return root;
     }
 
+
+    function renderMailGate() {
+      stage.innerHTML = "";
+
+      const root = document.createElement("div");
+      const title = document.createElement("div");
+      title.className = "title";
+      title.textContent = "Confirmation d’attestation";
+      root.appendChild(title);
+
+      const p = document.createElement("p");
+      p.textContent = "Pour valider votre attestation de suivi, cliquez sur le bouton ci-dessous afin d’ouvrir le mail de confirmation.";
+      root.appendChild(p);
+
+      const mailBtn = document.createElement("button");
+      mailBtn.type = "button";
+      mailBtn.textContent = "Envoyer l’attestation";
+      mailBtn.style.marginTop = "12px";
+
+      mailBtn.addEventListener("click", () => {
+        const subject = encodeURIComponent("attestation de suivi de formation");
+        const body = encodeURIComponent("Ce mail confirme que vous avez bien suivi la formation. Merci !");
+        window.location.href = `mailto:christophe.vankerrebroeck@casinoresortnamur.be?subject=${subject}&body=${body}`;
+
+        // On ne peut pas vérifier l’envoi effectif via mailto:, on valide donc sur clic.
+        finalMailSent = true;
+        allowNext = true;
+        prevBtn.disabled = false;
+        setButtons();
+      });
+
+      root.appendChild(mailBtn);
+      stage.appendChild(root);
+
+      // verrouillage : l'utilisateur doit cliquer sur le bouton mailto pour débloquer "Suite"
+      allowNext = false;
+      prevBtn.disabled = true;
+      setButtons();
+
+      setProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
     function render() {
       const page = PAGES[idx];
       stage.innerHTML = "";
@@ -925,6 +968,15 @@ if (idx === 0) {
 
     nextBtn.addEventListener("click", () => {
       if (!allowNext) return;
+
+      const currentPage = PAGES[idx];
+
+      // Juste après la dernière question (Quiz final), on impose le clic sur le bouton mailto
+      if (currentPage && currentPage.type === "quiz" && currentPage.title === "Quiz final" && !finalMailSent) {
+        renderMailGate();
+        return;
+      }
+
       if (idx < PAGES.length - 1) {
         idx += 1;
         render();
