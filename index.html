@@ -591,6 +591,34 @@
 
       {
         type: "text",
+        title: "4.1.1 Rappel pour les personnes formées BA4",
+        blocks: [
+          { p: "Certaines personnes ont reçu une habilitation BA4 et peuvent intervenir dans certaines situations." },
+          { p: "Même dans ce cas, plusieurs principes de sécurité doivent toujours être respectés :" },
+          { ul: [
+              "ne jamais remonter un disjoncteur plusieurs fois sans comprendre la cause",
+              "identifier l’origine du problème avant toute remise sous tension",
+              "ne jamais supposer qu’un déclenchement est anodin"
+            ]
+          },
+          { p: "Un disjoncteur qui déclenche est un signal de sécurité." },
+          { p: "Forcer la remise en service peut provoquer un incendie ou un accident électrique." },
+          { p: "En cas de doute : isoler l’équipement et prévenir une personne compétente." }
+        ]
+      },
+      {
+        type: "quiz",
+        title: "Quiz 18 bis",
+        question: "Si un disjoncteur déclenche plusieurs fois, que faut-il faire ?",
+        choices: [
+          { label: "Le remonter plusieurs fois pour voir si cela tient", correct: false },
+          { label: "Identifier l’origine du problème avant toute remise sous tension", correct: true },
+          { label: "Le bloquer en position ON", correct: false }
+        ]
+      },
+
+      {
+        type: "text",
         title: "4.2 Appareils électriques",
         blocks: [
           { p: "En fin d’utilisation :" },
@@ -636,6 +664,182 @@
           { label: "Aller vite pour arriver à l’heure", correct: false },
           { label: "Respecter le code de la route et adapter sa vitesse", correct: true },
           { label: "Utiliser le téléphone en roulant si c’est urgent", correct: false }
+        ]
+      },
+
+      {
+        type: "text",
+        title: "4.4 Machines et outils",
+        blocks: [
+          { p: "Les machines et outils font partie du travail quotidien mais peuvent provoquer des accidents graves." },
+          { p: "Le principal danger vient souvent de l’habitude." },
+          { p: "Quand on répète un geste des centaines de fois, on peut relâcher son attention." },
+          { ul: [
+              "toujours rester concentré lors de l’utilisation d’un outil",
+              "ne jamais supprimer ou contourner un dispositif de sécurité",
+              "ne jamais utiliser un outil défectueux",
+              "signaler immédiatement toute anomalie"
+            ]
+          },
+          { p: "La règle reste simple : sécurité d’abord, toujours." }
+        ]
+      },
+      {
+        type: "quiz",
+        title: "Quiz 20 bis",
+        question: "Quel est un risque fréquent lors de l’utilisation d’outils ?",
+        choices: [
+          { label: "L’excès d’attention", correct: false },
+          { label: "La routine et la perte de vigilance", correct: true },
+          { label: "Le fait de lire les consignes", correct: false }
+        ]
+      },
+
+      {
+        type: "text",
+        title: "4.5 Entretien du matériel",
+        blocks: [
+          { p: "Un outil mal entretenu peut devenir dangereux." },
+          { ul: [
+              "bien entretenir les outils après utilisation",
+              "ranger correctement le matériel",
+              "signaler tout outil endommagé",
+              "ne pas utiliser un équipement défectueux"
+            ]
+          },
+          { p: "Un bon entretien prolonge la durée de vie du matériel et réduit les accidents." }
+        ]
+      },
+      {
+        type: "quiz",
+        title: "Quiz 20 ter",
+        question: "Quel comportement est correct concernant l’entretien des outils ?",
+        choices: [
+          { label: "Continuer à utiliser un outil abîmé s’il fonctionne encore", correct: false },
+          { label: "Entretenir, ranger et signaler tout outil endommagé", correct: true },
+          { label: "Laisser le matériel sale pour gagner du temps", correct: false }
+        ]
+      },
+
+      {
+        type: "text",
+        title: "4.6 Port de charges",
+        blocks: [
+          { p: "Le port de charges peut provoquer des blessures au dos et aux articulations." },
+          { p: "Quelques règles simples permettent de réduire fortement les risques :" },
+          { ul: [
+              "plier les genoux et garder le dos droit",
+              "garder la charge proche du corps",
+              "éviter les torsions du dos",
+              "demander de l’aide si la charge est trop lourde",
+              "utiliser les aides mécaniques disponibles"
+            ]
+          },
+          { p: "Un mauvais geste répété pendant des années peut provoquer des problèmes durables." }
+        ]
+      },
+      {
+        type: "quiz",
+        title: "Quiz 20 quater",
+        question: "Quelle technique est correcte pour soulever une charge ?",
+        choices: [
+          { label: "Se pencher avec le dos courbé", correct: false },
+          { label: "Plier les genoux et garder la charge proche du corps", correct: true },
+          { label: "Tourner le dos pendant qu’on soulève", correct: false }
+        ]
+      },
+
+      {
+        type: "text",
+        title: "4.7 Hygiène et propreté",
+        blocks: [
+          { p: "La propreté des locaux contribue directement à la sécurité." },
+          { ul: [
+              "respecter le travail des équipes de nettoyage",
+              "ne pas laisser de déchets ou d’obstacles",
+              "signaler toute situation pouvant provoquer une chute"
+            ]
+          },
+          { p: "La propreté est l’affaire de tous." }
+        ]
+      },
+      {
+        type: "quiz",
+        title: "Quiz 20 quinquies",
+        question: "Quelle attitude est correcte en matière de propreté ?",
+        choices: [
+          { label: "Considérer que la propreté concerne uniquement le nettoyage", correct: false },
+          { label: "Respecter le travail des nettoyeurs et garder les lieux propres", correct: true },
+          { label: "Laisser un obstacle si on est pressé", correct: false }
+        ]
+      },
+
+      {
+        type: "text",
+        title: "4.8 Hygiène et santé",
+        blocks: [
+          { p: "Certaines habitudes simples contribuent à la santé et à la sécurité au travail :" },
+          { ul: [
+              "se laver régulièrement les mains",
+              "aérer les locaux lorsque c’est possible",
+              "porter un masque si l’on présente des symptômes de maladie"
+            ]
+          },
+          { p: "Une bonne hygiène limite la propagation des infections." }
+        ]
+      },
+      {
+        type: "quiz",
+        title: "Quiz 20 sexies",
+        question: "Quel comportement contribue à limiter la propagation des infections ?",
+        choices: [
+          { label: "Se laver régulièrement les mains", correct: true },
+          { label: "Éviter d’aérer les locaux", correct: false },
+          { label: "Venir malade sans précaution", correct: false }
+        ]
+      },
+
+{
+  type: "text",
+  title: "4.9 Hygiène de vie",
+  blocks: [
+    { p: "La sécurité dépend aussi de la condition physique et mentale." },
+    { p: "Pour durer longtemps dans de bonnes conditions, il est recommandé de :" },
+    { ul: [
+        "pratiquer une activité physique régulière",
+        "respecter un sommeil suffisant",
+        "éviter les excès d’alcool",
+        "ne jamais consommer de substances illicites"
+      ]
+    },
+    { p: "Ces éléments sont essentiels pour rester en bonne santé et travailler en sécurité sur le long terme." },
+    { p: "En cas de fatigue importante, de difficulté personnelle, d’abus ou de dépendance, il est important d’en parler rapidement." },
+    { p: "Vous pouvez en parler à votre manager, à la personne de confiance en toute confidentialité, au conseiller en prévention ou aux ressources humaines." },
+
+    { html: `
+      <div style="margin-top:16px;">
+        <div class="title" style="font-size:1.05rem;">En parler</div>
+        <ul style="margin-top:8px;">
+          <li><strong>Votre manager</strong> : parlez-en directement avec lui ou elle.</li>
+          <li><strong>La personne de confiance</strong> : échange confidentiel en direct.</li>
+          <li><strong>Le conseiller en prévention</strong> :
+            <a href="mailto:christophe.vankerrebroeck@casinoresortnamur.be">
+            christophe.vankerrebroeck@casinoresortnamur.be
+            </a>
+          </li>
+          <li><strong>Les ressources humaines</strong> : selon les procédures internes.</li>
+        </ul>
+      </div>
+    `}
+  ]
+},      {
+        type: "quiz",
+        title: "Quiz 20 septies",
+        question: "Quel message est correct concernant l’hygiène de vie ?",
+        choices: [
+          { label: "Le sommeil et l’état physique n’ont pas d’impact sur la sécurité", correct: false },
+          { label: "Une bonne hygiène de vie aide à travailler en sécurité sur le long terme", correct: true },
+          { label: "Les abus d’alcool sont sans conséquence au travail", correct: false }
         ]
       },
 
